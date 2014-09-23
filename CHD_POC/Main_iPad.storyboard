@@ -8,7 +8,9 @@
         <scene sceneID="MmZ-Ej-7Xl">
             <objects>
                 <navigationController definesPresentationContext="YES" id="ub4-zA-cYb" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Qj-x3-1CP">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="9Qj-x3-1CP">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -28,31 +30,39 @@
                         <viewControllerLayoutGuide type="bottom" id="Dt5-Oi-8uE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eKi-Oy-NXr">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Z1-sz-ZIG">
-                                <rect key="frame" x="0.0" y="65" width="768" height="831"/>
+                                <rect key="frame" x="0.0" y="1" width="768" height="831"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                             </webView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bw0-5t-3tg">
-                                <rect key="frame" x="0.0" y="65" width="768" height="831"/>
+                                <rect key="frame" x="0.0" y="1" width="768" height="831"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="LMx-3e-YqY">
                                 <rect key="frame" x="366" y="462" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" fixedFrame="YES" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k4Q-tF-xvh">
+                                <rect key="frame" x="0.0" y="832" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="gad-QR-g76"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="Activity" destination="LMx-3e-YqY" id="KeB-QY-Nec"/>
                         <outlet property="Display" destination="6Z1-sz-ZIG" id="EkG-Hc-Dzb"/>
                         <outlet property="img" destination="Bw0-5t-3tg" id="oEI-6y-clt"/>
+                        <outlet property="toolBar" destination="k4Q-tF-xvh" id="T2k-aV-pm3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nUe-QA-dMY" userLabel="First Responder" sceneMemberID="firstResponder"/>

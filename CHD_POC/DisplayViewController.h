@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIWebView *Display;
 @property (strong, nonatomic) IBOutlet UIImageView *Img;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *Activity;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 
 @property NSString *PageID;
 @property NSString *NavigateTo;

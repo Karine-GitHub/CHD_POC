@@ -14,7 +14,10 @@ extern double itemCount;
 
 @interface DynamicToolBar : NSObject
 
-+ (UIToolbar *) createToolBarIn:(UIView *)parentView withSteps:(NSDictionary *)steps;
+//+ (UIToolbar *) createToolBarIn:(UIView *)parentView withSteps:(NSDictionary *)steps;
+//+ (UIToolbar *) createToolBarIn:(UINavigationController *)parentView withSteps:(NSDictionary *)steps;
+//+ (UIToolbar *) createToolBarIn:(UIViewController *)parentView withSteps:(NSDictionary *)steps;
++ (void) createButtonInToolBar:(UIToolbar *)toolBar withSteps:(NSDictionary *)steps;
 
 + (void) settingsClick:(id)sender;
 + (void) dataRefreshClick:(id)sender;

@@ -8,8 +8,12 @@
         <scene sceneID="fUD-wf-5RH">
             <objects>
                 <navigationController definesPresentationContext="YES" id="6QR-ER-Y0o" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" userInteractionEnabled="NO" contentMode="scaleToFill" id="meP-gW-ObT">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO"/>
+                    <navigationBar key="navigationBar" userInteractionEnabled="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" id="meP-gW-ObT">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="JwI-si-1JD"/>
@@ -22,52 +26,68 @@
         <!--Display View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController storyboardIdentifier="displayView" id="vXZ-lx-hvc" customClass="DisplayViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="displayView" modalTransitionStyle="flipHorizontal" id="vXZ-lx-hvc" customClass="DisplayViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <view key="view" contentMode="scaleAspectFit" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UND-tu-cLY">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="450"/>
+                            <webView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="UND-tu-cLY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                             </webView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DyL-nI-ylO">
-                                <rect key="frame" x="0.0" y="0.0" width="326" height="480"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DyL-nI-ylO">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="vlO-MZ-CXo">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="vlO-MZ-CXo">
                                 <rect key="frame" x="150" y="203" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCm-uV-LSx">
+                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UND-tu-cLY" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="1Ft-Jv-ymX"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="fCm-uV-LSx" secondAttribute="bottom" id="E8e-T1-ZX9"/>
+                            <constraint firstItem="vlO-MZ-CXo" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="203" id="HZX-37-e6U"/>
+                            <constraint firstAttribute="trailing" secondItem="DyL-nI-ylO" secondAttribute="trailing" id="IRv-VY-1Hj"/>
+                            <constraint firstItem="fCm-uV-LSx" firstAttribute="top" secondItem="DyL-nI-ylO" secondAttribute="bottom" id="IkT-pV-iGV"/>
+                            <constraint firstItem="fCm-uV-LSx" firstAttribute="centerX" secondItem="vlO-MZ-CXo" secondAttribute="centerX" id="QKA-qh-TOp"/>
+                            <constraint firstItem="DyL-nI-ylO" firstAttribute="centerY" secondItem="UND-tu-cLY" secondAttribute="centerY" id="WdQ-qd-RVe"/>
+                            <constraint firstItem="DyL-nI-ylO" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="Wgl-NW-V0F"/>
+                            <constraint firstItem="DyL-nI-ylO" firstAttribute="top" secondItem="UND-tu-cLY" secondAttribute="top" id="WiG-Xb-E5P"/>
+                            <constraint firstItem="fCm-uV-LSx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="XJv-zG-C3F"/>
+                            <constraint firstItem="fCm-uV-LSx" firstAttribute="leading" secondItem="DyL-nI-ylO" secondAttribute="leading" id="Xda-uq-RYh"/>
+                            <constraint firstItem="fCm-uV-LSx" firstAttribute="leading" secondItem="UND-tu-cLY" secondAttribute="leading" id="ZGp-yj-B71"/>
+                            <constraint firstItem="DyL-nI-ylO" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="f8g-45-CD7"/>
+                            <constraint firstItem="DyL-nI-ylO" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="fgF-iT-abl"/>
+                            <constraint firstAttribute="trailing" secondItem="fCm-uV-LSx" secondAttribute="trailing" id="l6j-dk-Dxc"/>
+                            <constraint firstItem="fCm-uV-LSx" firstAttribute="trailing" secondItem="UND-tu-cLY" secondAttribute="trailing" id="mcf-aR-jej"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ANC-6h-dks"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="Activity" destination="vlO-MZ-CXo" id="DoS-RY-0G5"/>
                         <outlet property="Display" destination="UND-tu-cLY" id="uYe-Yh-vdu"/>
                         <outlet property="Img" destination="DyL-nI-ylO" id="qOx-ss-4Fh"/>
-                        <outlet property="searchDisplayController" destination="oNV-Sd-lOA" id="ne3-1l-V7a"/>
+                        <outlet property="toolBar" destination="fCm-uV-LSx" id="jht-Il-R4b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="oNV-Sd-lOA">
-                    <connections>
-                        <outlet property="delegate" destination="vXZ-lx-hvc" id="MT8-fe-I6V"/>
-                        <outlet property="searchContentsController" destination="vXZ-lx-hvc" id="K0u-Jy-NQc"/>
-                        <outlet property="searchResultsDataSource" destination="vXZ-lx-hvc" id="e7c-TL-AdX"/>
-                        <outlet property="searchResultsDelegate" destination="vXZ-lx-hvc" id="FA5-JX-SRS"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="254" y="497"/>
         </scene>
@@ -128,7 +148,7 @@
         <!--Settings View - Préférences-->
         <scene sceneID="6i1-13-msR">
             <objects>
-                <tableViewController storyboardIdentifier="settingsView" id="AGk-MO-ZaF" customClass="SettingsView" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="settingsView" modalTransitionStyle="flipHorizontal" id="AGk-MO-ZaF" customClass="SettingsView" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="top" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="T7o-uH-FD1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

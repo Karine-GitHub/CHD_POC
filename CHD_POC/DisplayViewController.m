@@ -36,18 +36,6 @@
 {
     // sizeToFit ne fonctionne pas ici
     [super viewWillAppear:YES];
-    
-    /*if ([self.navigationItem.title isEqualToString:@"Menu"]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsDone:) name:@"SettingsModificationNotification" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsDone:) name:@"NoModificationNotification" object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(conflictIssue:) name:@"ConflictualSituationNotification" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureAppDone:) name:@"ConfigureAppNotification" object:nil];
-    } else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    }*/
 
     self.navigationController.delegate = self;
 
@@ -197,19 +185,25 @@
         appDel = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
         self.Display.delegate = self;
+        [self.Display.scrollView setBounces:NO];
         //self.navigationController.delegate = self;
         [self.Img setImage:[UIImage imageNamed:@"LaunchImage-700"]];
         
-        [self.Display sizeToFit];
+        /*[self.Display sizeToFit];
         [self.Display.scrollView sizeToFit];
+        
         CGRect screenBound = [[UIScreen mainScreen] bounds];
-        float minHeight = screenBound.size.height - 38;
-        CGRect frameWebview = self.Display.frame;
-        CGRect frameScrollview = self.Display.scrollView.frame;
-        frameWebview.size.height = minHeight;
-        frameScrollview.size.height = minHeight;
-        [self.Display setFrame:frameWebview];
-        [self.Display.scrollView setFrame:frameScrollview];
+        CGRect frameToolBar = self.toolBar.bounds;
+        CGRect frameWebview = self.Display.bounds;
+        CGRect frameScrollview = self.Display.scrollView.bounds;
+        frameToolBar.origin.y = screenBound.size.height - self.toolBar.bounds.size.height;
+        frameWebview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
+        frameScrollview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
+        [self.toolBar setBounds:frameToolBar];
+        [self.Display setBounds:frameWebview];
+        [self.Display.scrollView setBounds:frameScrollview];*/
+        
+        
         /*CGFloat height = [[self.Display  stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
          if (height != self.Display .frame.size.height) {
          CGRect frameWebview = self.Display .frame;
@@ -291,7 +285,7 @@
                     // Set Page's title
                     self.navigationItem.title = [page objectForKey:@"Title"];
                     // Set Toolbar
-                    [self.view addSubview:[DynamicToolBar createToolBarIn:self.view withSteps:[only objectForKey:@"ToolBarOptions"]]];
+                    [DynamicToolBar createButtonInToolBar:self.toolBar withSteps:[only objectForKey:@"ToolBarOptions"]];
                     
                 } else if ([pageId isEqual:[page objectForKey:@"Id"]] && !stepName && ![[page objectForKey:@"TemplateType"] isEqualToString:@"Menu"]) {
                     NSDictionary *only = [pageSteps objectAtIndex:0];
@@ -301,8 +295,7 @@
                     // Set Page's title
                     self.navigationItem.title = [page objectForKey:@"Title"];
                     // Set Toolbar
-                    [self.view addSubview:[DynamicToolBar createToolBarIn:self.view withSteps:[only objectForKey:@"ToolBarOptions"]]];
-                    
+                    [DynamicToolBar createButtonInToolBar:self.toolBar withSteps:[only objectForKey:@"ToolBarOptions"]];
                 } else if ([pageId isEqual:[page objectForKey:@"Id"]] && stepName && feedId && ![[page objectForKey:@"TemplateType"] isEqualToString:@"Menu"]) {
                     //NSLog(@"Page : %@  / Step : %@  / Feed : %@", pageId, stepName, feedId);
                     self.isMenu = NO;
@@ -314,7 +307,7 @@
                             // Set Page's title
                             self.navigationItem.title = [page objectForKey:@"Title"];
                             // Set Toolbar
-                            [self.view addSubview:[DynamicToolBar createToolBarIn:self.view withSteps:[step objectForKey:@"ToolBarOptions"]]];
+                            [DynamicToolBar createButtonInToolBar:self.toolBar withSteps:[step objectForKey:@"ToolBarOptions"]];
                         }
                     }
                 }
@@ -365,8 +358,8 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [webView sizeToFit];
-    [webView.scrollView sizeToFit];
+    //[webView sizeToFit];
+    //[webView.scrollView sizeToFit];
     
     CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
     /*if (height != webView.frame.size.height) {
@@ -378,14 +371,16 @@
      [webView.scrollView setFrame:frameScrollview];
      [webView.scrollView setContentSize:CGSizeMake(frameScrollview.size.width, frameScrollview.size.height)];
      }*/
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    float minHeight = screenBound.size.height - 38;
-    CGRect frameWebview = webView.frame;
-    CGRect frameScrollview = webView.scrollView.frame;
-    frameWebview.size.height = minHeight;
-    frameScrollview.size.height = minHeight;
-    [webView setFrame:frameWebview];
-    [webView.scrollView setFrame:frameScrollview];
+    /*CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGRect frameToolBar = self.toolBar.bounds;
+    CGRect frameWebview = self.Display.bounds;
+    CGRect frameScrollview = self.Display.scrollView.bounds;
+    frameToolBar.origin.y = screenBound.size.height - self.toolBar.bounds.size.height;
+    frameWebview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
+    frameScrollview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
+    [self.toolBar setBounds:frameToolBar];
+    [self.Display setBounds:frameWebview];
+    [self.Display.scrollView setBounds:frameScrollview];*/
     //[webView.scrollView setContentSize:CGSizeMake(frameScrollview.size.width, frameScrollview.size.height)];
     
     /*NSLog(@"Height : %f",height);

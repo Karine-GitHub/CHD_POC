@@ -449,7 +449,7 @@ BOOL isDisconnect;
                     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:self.downloadDate forKey:@"downloadDate"]];
                 }
             }
-            if (!_isDownloadedByFile|| forceDownloading || _autoRefresh || refreshByToolbar) {
+            /*if (!_isDownloadedByFile|| forceDownloading || _autoRefresh || refreshByToolbar) {
                 NSLog(@"File does not exist or forceDownloading/autorefresh/refreshByToolbar is true");
                 // Check Connection if cache is not enabled
                 if (!cacheIsEnabled) {
@@ -489,7 +489,7 @@ BOOL isDisconnect;
                         [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObject:self.downloadDate forKey:@"downloadDate"]];
                     }
                 }
-            }
+            }*/
             if (self.applicationDatas != Nil) {
                 // If there no connection, take cache
                 if (!_isDownloadedByNetwork) {

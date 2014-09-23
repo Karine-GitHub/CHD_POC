@@ -15,14 +15,8 @@ double itemCount;
 
 @implementation DynamicToolBar
 
-+ (UIToolbar *) createToolBarIn:(UIView *)parentView withSteps:(NSDictionary *)steps
++ (void) createButtonInToolBar:(UIToolbar *)toolBar withSteps:(NSDictionary *)steps;
 {
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    
-    UIToolbar *dynamicToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenBound.size.height - 44, screenBound.size.width, 60)];
-    [dynamicToolBar sizeToFit];
-    [dynamicToolBar setTranslucent:YES];
-    [dynamicToolBar setBackgroundColor:parentView.backgroundColor];
     NSMutableArray *toolBarItems = [[NSMutableArray alloc] init];
     
     if ([[steps valueForKey:@"AllowDataRefreshing"] isEqual:[NSNumber numberWithBool:YES]]) {
@@ -41,8 +35,9 @@ double itemCount;
         UILabel *updateInfos = [[UILabel alloc] init];
         updateInfos.text = [NSString stringWithFormat:@"Mise à jour le %@", update];
         [updateInfos setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+        [updateInfos setTextColor:[UIColor whiteColor]];
         updateInfos.textAlignment = NSTextAlignmentCenter;
-        [updateInfos setFrame:CGRectMake(3, 3, dynamicToolBar.frame.size.width - 80, dynamicToolBar.frame.size.height)];
+        [updateInfos setFrame:CGRectMake(3, 3, toolBar.frame.size.width - 80, toolBar.frame.size.height)];
         UIBarButtonItem *labelContainer = [[UIBarButtonItem alloc] initWithCustomView:updateInfos];
         [toolBarItems addObject:labelContainer];
     }
@@ -50,7 +45,6 @@ double itemCount;
     if ([[steps valueForKey:@"AllowApplicationSettings"] isEqual:[NSNumber numberWithBool:YES]]) {
         UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings-free.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(settingsClick:)];
         UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-
         [toolBarItems addObject:settings];
         [toolBarItems addObject:space];
 
@@ -133,14 +127,14 @@ double itemCount;
         [toolBarItems addObject:stepperContainer];
     }
     
-    [dynamicToolBar setItems:toolBarItems animated:YES];
-    return dynamicToolBar;
+    [toolBar setItems:toolBarItems animated:YES];
 }
 
 + (void) settingsClick:(id)sender
 {
     // 1° : toolbar, 2° : view, 3° : viewController
     UIViewController *controller = (UIViewController *)[[[sender nextResponder] nextResponder] nextResponder];
+    [controller.navigationController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [controller.navigationController pushViewController:[controller.storyboard instantiateViewControllerWithIdentifier:@"settingsView"] animated:YES];
 }
 
@@ -449,10 +443,20 @@ double itemCount;
 {
     DisplayViewController *controller = (DisplayViewController *)[[[sender nextResponder] nextResponder] nextResponder];
 
+    [UIView beginAnimations:@"detailsNavigationStyle" context:Nil];
+    [UIView setAnimationDelay:2.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    
+    
     if (sender.value > currentStepValue) {
         [controller.Display stringByEvaluatingJavaScriptFromString:@"viewNextDetails()"];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:controller.view cache:YES];
+        [UIView commitAnimations];
+        
     } else {
         [controller.Display stringByEvaluatingJavaScriptFromString:@"viewPreviousDetails()"];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:controller.view cache:YES];
+        [UIView commitAnimations];
     }
     NSString *newValue = [NSString stringWithFormat:@"%d sur %d", (int)sender.value + 1, (int)itemCount + 1];
     controller.navigationItem.title = newValue;
