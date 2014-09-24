@@ -136,33 +136,9 @@ double itemCount;
     UIViewController *controller = (UIViewController *)[[[sender nextResponder] nextResponder] nextResponder];
     
     SettingsView *settingsView = (SettingsView *) [controller.storyboard instantiateViewControllerWithIdentifier:@"settingsView"];
-    //settingsView.tableView.delegate = settingsView;
-    
-    /*[UIView animateWithDuration:0.30 animations:^{
-        
-        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        [controller.navigationController pushViewController:settingsView animated:NO];
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:controller.navigationController.view cache:YES];
 
-    }];*/
-    
-    /* Transition pas OK lag
-    [UIView animateWithDuration:0.30 animations:^{
-        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        [controller.navigationController pushViewController:settingsView animated:NO];
-                }
-                     completion:^(BOOL finished){[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:controller.navigationController.view cache:YES];
-}
-     ];*/
-    
-    //transition OK mais nav bar pas ok
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsView];
     [controller presentViewController:nav animated:YES completion:nil];
-    // transition OK mais pas de nav bar
-    //[controller.navigationController presentViewController:settingsView animated:YES completion:nil];
-    
-    /*transition pas ok mais nav bar ok
-    [controller.navigationController pushViewController:settingsView animated:YES]; */
 }
 
 + (void) dataRefreshClick:(id)sender
@@ -173,7 +149,20 @@ double itemCount;
         noConnection.message = @"La connexion réseau actuelle est trop failble ou coupée. Il est impossible de télécharger le contenu.";
         [noConnection performSelectorOnMainThread:@selector(show) withObject:self waitUntilDone:YES];
         });
+    } else if (cacheIsEnabled) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *cacheEnabled = [[UIAlertView alloc] initWithTitle:@"Situation Conflictuelle" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
+            cacheEnabled.message = @"Impossible de rafraîchir le contenu car le mode Cache est activé.";
+            [cacheEnabled performSelectorOnMainThread:@selector(show) withObject:self waitUntilDone:YES];
+        });
+    } else if (roamingSituation && !roamingIsEnabled) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *roamingSituation = [[UIAlertView alloc] initWithTitle:@"Situation Conflictuelle" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
+            roamingSituation.message = @"Impossible de rafraîchir le contenu car le mode Roaming est desactivé alors que vous êtes actuellement en situation de roaming.";
+            [roamingSituation performSelectorOnMainThread:@selector(show) withObject:self waitUntilDone:YES];
+        });
     } else {
+    
         AppDelegate *appDel = [[AppDelegate alloc] init];
         DisplayViewController *controller = (DisplayViewController *)[[[sender nextResponder] nextResponder] nextResponder];
         
@@ -470,26 +459,31 @@ double itemCount;
 {
     DisplayViewController *controller = (DisplayViewController *)[[[sender nextResponder] nextResponder] nextResponder];
 
-    [UIView beginAnimations:@"detailsNavigationStyle" context:Nil];
-    [UIView setAnimationDelay:2.0f];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    
+    NSURLRequest *chack = [controller.Display request];
     
     if (sender.value > currentStepValue) {
-        [controller.Display stringByEvaluatingJavaScriptFromString:@"viewNextDetails()"];
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:controller.view cache:YES];
-        [UIView commitAnimations];
+        [UIView animateWithDuration:0.60 animations:^{
+
+            [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+            
+            [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:controller.navigationController.view cache:YES];
+        } completion:^(BOOL finished){            [controller.Display stringByEvaluatingJavaScriptFromString:@"viewNextDetails()"];
+        }
+         
+         ];
         
     } else {
-        [controller.Display stringByEvaluatingJavaScriptFromString:@"viewPreviousDetails()"];
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:controller.view cache:YES];
-        [UIView commitAnimations];
+        [UIView animateWithDuration:0.60 animations:^{
+            
+            [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+            
+            [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:controller.navigationController.view cache:YES];
+            
+        }completion:^(BOOL finished){[controller.Display stringByEvaluatingJavaScriptFromString:@"viewPreviousDetails()"];}];
     }
     NSString *newValue = [NSString stringWithFormat:@"%d sur %d", (int)sender.value + 1, (int)itemCount + 1];
     controller.navigationItem.title = newValue;
     currentStepValue = sender.value;
 }
-
-
 
 @end

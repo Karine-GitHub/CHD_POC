@@ -95,7 +95,7 @@
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 [self.activity.activity stopAnimating];
                 [self.activity setHidden:YES];
-                self.navigationItem.hidesBackButton = NO;
+                [self.navigationItem.leftBarButtonItem setEnabled:YES];
                 // Alert user that downloading is finished
                 self.errorMsg = [NSString stringWithFormat:@"Le téléchargement des données est terminé."];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Téléchargement Réussi" message:self.errorMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -136,9 +136,7 @@
             appDel = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         }
         self.navigationController.delegate = self;
-        /*[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-        
-        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];*/
+
         [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackOpaque];
         [self.navigationController.navigationBar setTranslucent:NO];
         [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
@@ -148,18 +146,6 @@
         [self.navigationItem.leftBarButtonItem setAction:@selector(returnToMenu)];
         
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-        
-        /*UIButton *custombutton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [custombutton addTarget:self action:@selector(returnToMenu) forControlEvents:UIControlEventTouchUpInside];
-        [custombutton setTitle:@"OK" forState:UIControlStateNormal];
-        [custombutton setTintColor:[UIColor whiteColor]];
-        UIBarButtonItem *customItem = [[UIBarButtonItem alloc] initWithCustomView:custombutton];
-        [customItem setTitle:@"OK"];
-        [customItem setTintColor:[UIColor whiteColor]];
-        [self.navigationItem setLeftBarButtonItem:customItem];
-        self.navigationItem.leftBarButtonItem.title = @"OK";
-        [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];*/
-        // NOT WORK : [self.navigationItem setBackBarButtonItem:customItem];
         
         self.reconfigNecessary = NO;
         
@@ -201,11 +187,11 @@
         roamingIsEnabled = self.roamingMode.isOn;
         
         // If conflictual situation, block in Settings view
-        /*if ((self.cacheMode.isOn || (roamingSituation && !self.roamingMode.isOn)) && self.size == 0.0) {
-            self.navigationItem.hidesBackButton = YES;
+        if ((self.cacheMode.isOn || (roamingSituation && !self.roamingMode.isOn)) && self.size == 0.0) {
+            [self.navigationItem.leftBarButtonItem setEnabled:NO];
         } else {
-            self.navigationItem.hidesBackButton = NO;
-        }*/
+            [self.navigationItem.leftBarButtonItem setEnabled:YES];
+        }
     }
 }
 
@@ -215,12 +201,14 @@
     displayView.NavigateTo = nil;
     displayView.PageID = nil;
     displayView.FeedID = nil;
-    [UIView animateWithDuration:0.30 animations:^{
+    [UIView animateWithDuration:0.40 animations:^{
         
         [UIView setAnimationCurve:UIViewAnimationCurveLinear];
         [self.navigationController pushViewController:displayView animated:NO];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:YES];
         
+    } completion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
     }];
 }
 
@@ -264,14 +252,10 @@
     if ([[tableView cellForRowAtIndexPath:indexPath] isEqual:self.downloadDataCell])
     {
         @synchronized(self){
-            if (self.cacheMode.isOn || (roamingSituation && !self.roamingMode.isOn)) {
+            if (roamingSituation && !self.roamingMode.isOn) {
                 UIAlertView *alertConflict = [[UIAlertView alloc] initWithTitle:@"Situation Conflictuelle" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
-                if (self.cacheMode.isOn) {
-                    alertConflict.message = @"La configuration actuelle ne permet pas de télécharger du contenu. Désactiver le mode Cache pour effectuer cette action.";
-                } else {
-                    alertConflict.message = @"La configuration actuelle ne permet pas de télécharger du contenu. Activer mode Roaming pour effectuer cette action.";
-                }
-                [alertConflict performSelectorOnMainThread:@selector(show) withObject:self waitUntilDone:YES];
+                alertConflict.message = @"La configuration actuelle ne permet pas de télécharger du contenu. Activer mode Roaming pour effectuer cette action.";
+               [alertConflict performSelectorOnMainThread:@selector(show) withObject:self waitUntilDone:YES];
             } else if (![AppDelegate testConnection]) {
                 UIAlertView *noConnection = [[UIAlertView alloc] initWithTitle:@"Situation du Réseau" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
                 noConnection.message = @"La connexion réseau actuelle est trop failble ou coupée. Il est impossible de télécharger le contenu.";
@@ -288,7 +272,7 @@
                 [self.activity setHidden:NO];
                 [self.view addSubview:self.activity];
                 
-                self.navigationItem.hidesBackButton = YES;
+                [self.navigationItem.leftBarButtonItem setEnabled:NO];
                 // Download all
                 forceDownloading = YES;
                 [appDel performSelectorInBackground:@selector(configureApp) withObject:appDel];
@@ -491,14 +475,5 @@
         }
     }
 }
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    
-}
-
-/*- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {}
-
-- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {}*/
 
 @end
