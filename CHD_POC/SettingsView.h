@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "CustomInfoView.h"
 
-@interface SettingsView : UITableViewController <UIAlertViewDelegate, UITableViewDelegate>
+@interface SettingsView : UITableViewController <UIAlertViewDelegate, UITableViewDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *SettingsTable;
 

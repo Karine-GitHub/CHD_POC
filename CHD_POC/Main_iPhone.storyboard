@@ -89,12 +89,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="254" y="497"/>
+            <point key="canvasLocation" x="244" y="497"/>
         </scene>
         <!--Services Manager-->
         <scene sceneID="XiG-R5-abx">
             <objects>
-                <tableViewController id="7CF-UI-Rcq" customClass="ServicesManager" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="servicesManager" id="7CF-UI-Rcq" customClass="ServicesManager" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IKf-XN-wWE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,9 +143,9 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8be-oK-mxb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1208" y="158"/>
+            <point key="canvasLocation" x="1702" y="149"/>
         </scene>
-        <!--Settings View - Préférences-->
+        <!--Settings View - Title-->
         <scene sceneID="6i1-13-msR">
             <objects>
                 <tableViewController storyboardIdentifier="settingsView" modalTransitionStyle="flipHorizontal" id="AGk-MO-ZaF" customClass="SettingsView" sceneMemberID="viewController">
@@ -173,18 +173,18 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="7CF-UI-Rcq" kind="push" id="o9T-6o-kRE"/>
+                                            <segue destination="7CF-UI-Rcq" kind="push" id="MFH-Rk-0O8"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="DONNÉES" id="dW1-jL-e8h">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="refresh" textLabel="rVV-F2-i97" detailTextLabel="x8I-93-gaB" style="IBUITableViewCellStyleValue1" id="lT5-p2-nvP">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="refresh" textLabel="rVV-F2-i97" detailTextLabel="x8I-93-gaB" style="IBUITableViewCellStyleValue1" id="lT5-p2-nvP">
                                         <rect key="frame" x="0.0" y="147" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lT5-p2-nvP" id="szB-ej-jke">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Rafraîchissement" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rVV-F2-i97">
@@ -195,7 +195,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8I-93-gaB">
-                                                    <rect key="frame" x="261" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="241" y="11" width="44" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" none="YES"/>
@@ -207,7 +207,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="EjB-FA-1QR" kind="push" identifier="refresh" id="Tqv-p7-hFS"/>
+                                            <segue destination="EjB-FA-1QR" kind="push" id="X2e-9h-qcc"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -376,7 +376,13 @@
                             <outlet property="delegate" destination="AGk-MO-ZaF" id="gTI-tc-FdK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Préférences" id="vno-tr-cah"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Title" id="bUL-PK-dEW">
+                        <barButtonItem key="leftBarButtonItem" title="OK" id="oDj-73-xYJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="SettingsTable" destination="T7o-uH-FD1" id="uw7-FI-4Pi"/>
@@ -391,7 +397,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4H9-97-cr3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="733" y="497"/>
+            <point key="canvasLocation" x="1226" y="497"/>
         </scene>
         <!--Refresh Setting View Controller - Rafraîchissement-->
         <scene sceneID="K6h-48-e22">
@@ -419,16 +425,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Rafraîchissement" id="hhz-NP-Z5X">
-                        <barButtonItem key="backBarButtonItem" title="Préférences" id="W2l-Bl-In8"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Rafraîchissement" id="hhz-NP-Z5X"/>
                     <connections>
                         <outlet property="refresh" destination="rG5-Er-b0u" id="7Hw-R1-X1F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gif-JX-gNT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1208" y="821"/>
+            <point key="canvasLocation" x="1702" y="813"/>
         </scene>
     </scenes>
     <resources>

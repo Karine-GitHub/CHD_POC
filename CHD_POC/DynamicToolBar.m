@@ -134,8 +134,35 @@ double itemCount;
 {
     // 1° : toolbar, 2° : view, 3° : viewController
     UIViewController *controller = (UIViewController *)[[[sender nextResponder] nextResponder] nextResponder];
-    [controller.navigationController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [controller.navigationController pushViewController:[controller.storyboard instantiateViewControllerWithIdentifier:@"settingsView"] animated:YES];
+    
+    SettingsView *settingsView = (SettingsView *) [controller.storyboard instantiateViewControllerWithIdentifier:@"settingsView"];
+    //settingsView.tableView.delegate = settingsView;
+    
+    /*[UIView animateWithDuration:0.30 animations:^{
+        
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        [controller.navigationController pushViewController:settingsView animated:NO];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:controller.navigationController.view cache:YES];
+
+    }];*/
+    
+    /* Transition pas OK lag
+    [UIView animateWithDuration:0.30 animations:^{
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        [controller.navigationController pushViewController:settingsView animated:NO];
+                }
+                     completion:^(BOOL finished){[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:controller.navigationController.view cache:YES];
+}
+     ];*/
+    
+    //transition OK mais nav bar pas ok
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingsView];
+    [controller presentViewController:nav animated:YES completion:nil];
+    // transition OK mais pas de nav bar
+    //[controller.navigationController presentViewController:settingsView animated:YES completion:nil];
+    
+    /*transition pas ok mais nav bar ok
+    [controller.navigationController pushViewController:settingsView animated:YES]; */
 }
 
 + (void) dataRefreshClick:(id)sender

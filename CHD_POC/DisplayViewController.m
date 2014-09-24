@@ -79,26 +79,6 @@
         }
     }
 }
-// sizeToFit ne fonctionne pas ici
--(void) viewDidAppear:(BOOL)animated
-{
-    //[self.Display sizeToFit];
-    //[self.Display.scrollView sizeToFit];
-    
-    /*CGRect screenBound = [[UIScreen mainScreen] bounds];
-    float minHeight = screenBound.size.height - 38;
-    CGRect frameWebview = self.Display.frame;
-    CGRect frameScrollview = self.Display.scrollView.frame;
-    frameWebview.size.height = minHeight;
-    frameScrollview.size.height = minHeight;
-    [self.Display setFrame:frameWebview];
-    [self.Display.scrollView setFrame:frameScrollview];
-    [self.Display.scrollView setContentSize:CGSizeMake(frameScrollview.size.width, frameScrollview.size.height)];
-    
-    NSLog(@"WebView : %f", self.Display.frame.size.height);
-    NSLog(@"ScrollView : %f",self.Display.scrollView.frame.size.height);
-    NSLog(@"ContentSize : %f",self.Display.scrollView.contentSize.height);*/
-}
 
 - (void) viewWillDisappear:(BOOL)animated
 {
@@ -183,38 +163,12 @@
         
         // Do any additional setup after loading the view, typically from a nib.
         appDel = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
+        
         self.Display.delegate = self;
         [self.Display.scrollView setBounces:NO];
         //self.navigationController.delegate = self;
         [self.Img setImage:[UIImage imageNamed:@"LaunchImage-700"]];
-        
-        /*[self.Display sizeToFit];
-        [self.Display.scrollView sizeToFit];
-        
-        CGRect screenBound = [[UIScreen mainScreen] bounds];
-        CGRect frameToolBar = self.toolBar.bounds;
-        CGRect frameWebview = self.Display.bounds;
-        CGRect frameScrollview = self.Display.scrollView.bounds;
-        frameToolBar.origin.y = screenBound.size.height - self.toolBar.bounds.size.height;
-        frameWebview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
-        frameScrollview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
-        [self.toolBar setBounds:frameToolBar];
-        [self.Display setBounds:frameWebview];
-        [self.Display.scrollView setBounds:frameScrollview];*/
-        
-        
-        /*CGFloat height = [[self.Display  stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
-         if (height != self.Display .frame.size.height) {
-         CGRect frameWebview = self.Display .frame;
-         CGRect frameScrollview = self.Display .scrollView.frame;
-         frameWebview.size.height = height;
-         frameScrollview.size.height = height;
-         [self.Display  setFrame:frameWebview];
-         [self.Display .scrollView setFrame:frameScrollview];
-         [self.Display .scrollView setContentSize:CGSizeMake(frameScrollview.size.width, frameScrollview.size.height)];
-         }*/
-        
+
         [self performSelectorInBackground:@selector(refreshApplicationByNewDownloading) withObject:self];
         [self initApp];
     }
@@ -358,35 +312,6 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    //[webView sizeToFit];
-    //[webView.scrollView sizeToFit];
-    
-    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
-    /*if (height != webView.frame.size.height) {
-     CGRect frameWebview = webView.frame;
-     CGRect frameScrollview = webView.scrollView.frame;
-     frameWebview.size.height = height;
-     frameScrollview.size.height = height;
-     [webView setFrame:frameWebview];
-     [webView.scrollView setFrame:frameScrollview];
-     [webView.scrollView setContentSize:CGSizeMake(frameScrollview.size.width, frameScrollview.size.height)];
-     }*/
-    /*CGRect screenBound = [[UIScreen mainScreen] bounds];
-    CGRect frameToolBar = self.toolBar.bounds;
-    CGRect frameWebview = self.Display.bounds;
-    CGRect frameScrollview = self.Display.scrollView.bounds;
-    frameToolBar.origin.y = screenBound.size.height - self.toolBar.bounds.size.height;
-    frameWebview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
-    frameScrollview.size.height = screenBound.size.height - self.toolBar.bounds.size.height;
-    [self.toolBar setBounds:frameToolBar];
-    [self.Display setBounds:frameWebview];
-    [self.Display.scrollView setBounds:frameScrollview];*/
-    //[webView.scrollView setContentSize:CGSizeMake(frameScrollview.size.width, frameScrollview.size.height)];
-    
-    /*NSLog(@"Height : %f",height);
-     NSLog(@"WebView : %f", webView.frame.size.height);
-     NSLog(@"ScrollView : %f",webView.scrollView.frame.size.height);
-     NSLog(@"ContentSize : %f",webView.scrollView.contentSize.height);*/
     if ([AppDelegate testConnection]) {
         [self.Activity stopAnimating];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -524,6 +449,15 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configureAppDone:) name:@"ConfigureAppNotification" object:nil];
     }
 }
+/*- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
+{
+
+}*/
 
 // Do not change the date if just the refresh variable has changed
 - (void) refreshApplicationByNewDownloading

@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *Img;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *Activity;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
 @property NSString *PageID;
 @property NSString *NavigateTo;

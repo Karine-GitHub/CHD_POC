@@ -135,6 +135,31 @@
         if (!appDel) {
             appDel = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         }
+        self.navigationController.delegate = self;
+        /*[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+        
+        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];*/
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlackOpaque];
+        [self.navigationController.navigationBar setTranslucent:NO];
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+        self.navigationItem.title = @"Préférences";
+        
+        [self.navigationItem.leftBarButtonItem setTarget:self];
+        [self.navigationItem.leftBarButtonItem setAction:@selector(returnToMenu)];
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        /*UIButton *custombutton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [custombutton addTarget:self action:@selector(returnToMenu) forControlEvents:UIControlEventTouchUpInside];
+        [custombutton setTitle:@"OK" forState:UIControlStateNormal];
+        [custombutton setTintColor:[UIColor whiteColor]];
+        UIBarButtonItem *customItem = [[UIBarButtonItem alloc] initWithCustomView:custombutton];
+        [customItem setTitle:@"OK"];
+        [customItem setTintColor:[UIColor whiteColor]];
+        [self.navigationItem setLeftBarButtonItem:customItem];
+        self.navigationItem.leftBarButtonItem.title = @"OK";
+        [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];*/
+        // NOT WORK : [self.navigationItem setBackBarButtonItem:customItem];
         
         self.reconfigNecessary = NO;
         
@@ -176,12 +201,27 @@
         roamingIsEnabled = self.roamingMode.isOn;
         
         // If conflictual situation, block in Settings view
-        if ((self.cacheMode.isOn || (roamingSituation && !self.roamingMode.isOn)) && self.size == 0.0) {
+        /*if ((self.cacheMode.isOn || (roamingSituation && !self.roamingMode.isOn)) && self.size == 0.0) {
             self.navigationItem.hidesBackButton = YES;
         } else {
             self.navigationItem.hidesBackButton = NO;
-        }
+        }*/
     }
+}
+
+-(void) returnToMenu
+{
+    DisplayViewController *displayView = (DisplayViewController*) [self.storyboard instantiateViewControllerWithIdentifier:@"displayView"];
+    displayView.NavigateTo = nil;
+    displayView.PageID = nil;
+    displayView.FeedID = nil;
+    [UIView animateWithDuration:0.30 animations:^{
+        
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        [self.navigationController pushViewController:displayView animated:NO];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:YES];
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -452,5 +492,13 @@
     }
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    
+}
+
+/*- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {}*/
 
 @end
